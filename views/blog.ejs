@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <%- include('./partials/head') %>
+</head>
+<body>
+    <%- include('./partials/nav') %>
+    <%- include('./partials/script') %>
+    <div class="container mt-3">
+        <h1><%= blog.title %></h1>
+        <img src="<%= blog.coverImageUrl %> " width="500px">
+        <pre><%= blog.body %></pre>
+    </div>
+    <div class="container">
+        <p><%= blog.createdBy.image %></p>
+        <img src="<%= blog.createdBy.image %>" width="50px"%> <span><%= blog.createdBy.Fullname %>  </span>      
+    </div>
+   <% if(locals.user) {%>
+    <div class="container mt-3">
+        <form action="/blog/comment/<%= blog._id %>" method="post">
+            <div class="form-group" style="margin-bottom: 20px;">
+                <input type="text" class="form-control" placeholder="Enter Your Comment" name="comment">
+                <div class="btn btn-sm btn-primary">
+                <button type="submit">Add Comment</button>
+                </div>
+              </div>
+        </form>
+    </div>
+   <% } %>
+</body>

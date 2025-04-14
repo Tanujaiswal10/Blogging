@@ -18,6 +18,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/blogify').then(()=>{console.log("mon
 app.set("view engine","ejs")
 app.set("views", path.resolve('./views'))
 app.use(express.static(path.resolve('./public')));
+app.use('/images', express.static('public/images'));
 
 app.use("/user", userRoute);
 
