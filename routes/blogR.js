@@ -48,12 +48,33 @@ router.get("/:id", async(req,res)=>{
   })
 })
 
-router.post("/comment/:blogId", async(req,res)=>{
-  await comment.create({
-    content:req.body.comment,
-    createdBy:req.user._id,
-    blogBy:req.params.blogId,
-  })
-})
+// router.post("/comment/:blogId", async(req,res)=>{
+//   console.log(req.body)
+//   await comment.create({
+//     content:req.body.comment,
+//     createdBy:req.user._id,
+//     blogBy:req.params.blogId,
+//   })
+// })
+
+
+
+router.post("/comment/:blogId", async (req, res) => {
+  try {
+    const newComment = await comment.create({
+      content: req.body.comment,
+      createdBy: req.user._id,
+      blogBy: req.params.blogId,
+    });
+
+    res.status(200).json({
+      message: "Comment added successfully",
+      comment: newComment
+    });
+  } catch (err) {
+    console.error("Error adding comment:", err);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+});
 
 module.exports = router;

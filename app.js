@@ -1,3 +1,5 @@
+require("dotenv").config()
+
 const path = require("path")
 const express = require('express');
 const app = express();
@@ -12,7 +14,8 @@ const { checkAuthenticationCookie } = require("./middlewares/authentication");
 app.use(checkAuthenticationCookie('token'))
 const {blogg} = require('./models/blog')
 
-mongoose.connect('mongodb://127.0.0.1:27017/blogify').then(()=>{console.log("mongoose connected")}).catch("mongoose didnt connect")
+mongoose.connect(process.env.MONGO_URL).then(()=>{console.log("mongoose connected")}).catch("mongoose didnt connect")
+
 
 
 app.set("view engine","ejs")
@@ -31,6 +34,5 @@ app.get("/",async (req,res) =>{
 })
 
 
-
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, ()=> {console.log(`Server started at: ${PORT}`)})
